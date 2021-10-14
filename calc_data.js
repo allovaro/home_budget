@@ -72,7 +72,7 @@ class CoinkeeperDB {
         months = months.sort((a, b) => (a - b));
 
         const retVal = {
-            value,
+            value: value,
             perMonth: valuePerMonth,
             aver: value / months.length,
             months,
