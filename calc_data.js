@@ -48,6 +48,12 @@ class CoinkeeperDB {
         let months = [];
         let prevMonth = rows[0].data.split('/')[0];
         const valuePerMonth = {};
+        let retVal = {
+            value: 0,
+            perMonth: 0,
+            aver: 0,
+            months: [],
+        };
 
         rows.forEach(row => {
             if (row.type === type) {
@@ -68,10 +74,10 @@ class CoinkeeperDB {
                 }
             }
         });
-        months = [...new Set([...months.map(item => (parseInt(item)))])];
+        months = [...new Set([...months.map(item => (parseInt(item, 10)))])];
         months = months.sort((a, b) => (a - b));
 
-        const retVal = {
+        retVal = {
             value,
             perMonth: valuePerMonth,
             aver: value / months.length,
@@ -108,7 +114,7 @@ class CoinkeeperDB {
     }
 
     async getStats(obj) {
-        const retVal = {};
+        const retVal = { year: obj.date.year };
         let ret;
         const rows = await this.readMonthesRows(obj.date.month, obj.date.year);
 
